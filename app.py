@@ -95,6 +95,23 @@ def _strip_code_fences(text: str) -> str:
     return t.strip("\n") + "\n"
 
 
+def _pick_num_ctx(code_len: int) -> int:
+    if code_len < 8000:
+        return 8192
+    if code_len < 24000:
+        return 16384
+    return 32768
+
+
+def _pick_num_predict(task: str, code_len: int) -> int:
+    if task in ("params_check", "misra"):
+        return 2048
+    if task == "adsb":
+        return 4096
+    # headers: длина ответа сопоставима с входом + комментарии
+    return min(16384, max(4096, code_len // 2))
+
+
 @app.get("/", response_class=HTMLResponse)
 def index():
     return open("static/index.html", encoding="utf-8").read()
@@ -164,7 +181,11 @@ def run_stream(req: Request):
     _validate_files(req.files)
     code = _assemble_code(req.files, req.code or "")
 
-    template = Template(req.task and PROMPTS[req.task])
+    # адаптивный размер контекста и ответа
+    num_ctx = _pick_num_ctx(len(code))
+    num_predict = _pick_num_predict(req.task, len(code))
+
+    template = Template(PROMPTS[req.task])
     prompt = template.safe_substitute(
         code=code,
         context=req.context or "",
@@ -172,19 +193,34 @@ def run_stream(req: Request):
 
     def generator():
         buf = []
+        meta = None
         try:
-            for chunk in run_qwen_stream(prompt):
-                buf.append(chunk)
-                yield _sse({"type": "chunk", "text": chunk})
+            for kind, value in run_qwen_stream(
+                prompt, num_ctx=num_ctx, num_predict=num_predict
+            ):
+                if kind == "text":
+                    buf.append(value)
+                    yield _sse({"type": "chunk", "text": value})
+                elif kind == "meta":
+                    meta = value
 
             raw = "".join(buf)
 
             if req.task in CODE_TASKS:
                 cleaned = _strip_code_fences(raw)
-                yield _sse({"type": "code_result", "code": cleaned})
+                yield _sse({
+                    "type": "code_result",
+                    "code": cleaned,
+                    "meta": meta,
+                })
             else:
                 parsed = normalize(req.task, extract_json(raw))
-                yield _sse({"type": "done", "raw": raw, "parsed": parsed})
+                yield _sse({
+                    "type": "done",
+                    "raw": raw,
+                    "parsed": parsed,
+                    "meta": meta,
+                })
         except Exception as e:
             yield _sse({"type": "error", "message": str(e)})
 

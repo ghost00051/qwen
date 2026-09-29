@@ -7,7 +7,9 @@
     <title>Qwen Web</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #0f1117;
@@ -28,105 +30,220 @@
             --radius-sm: 8px;
         }
 
-        * { box-sizing: border-box; }
-
-        html, body {
-            margin: 0; padding: 0;
-            background: var(--bg); color: var(--text);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 14px; line-height: 1.5; min-height: 100vh;
+        * {
+            box-sizing: border-box;
         }
 
-        .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
 
         .sidebar {
             background: var(--panel);
             border-right: 1px solid var(--border);
             padding: 20px 16px;
-            display: flex; flex-direction: column; gap: 16px;
-            position: sticky; top: 0; height: 100vh; overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .brand {
-            display: flex; align-items: center; gap: 10px;
-            padding: 4px 8px 16px; border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 8px 16px;
+            border-bottom: 1px solid var(--border-soft);
         }
 
         .brand-logo {
-            width: 32px; height: 32px; border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             background: linear-gradient(135deg, var(--accent), #a855f7);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 15px; color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
         }
 
-        .brand-title { font-weight: 600; font-size: 15px; }
-        .brand-sub { font-size: 11px; color: var(--text-faint); }
+        .brand-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            color: var(--text-faint);
+        }
 
         .nav-label {
-            font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
-            color: var(--text-faint); padding: 0 8px; margin-bottom: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-faint);
+            padding: 0 8px;
+            margin-bottom: 6px;
         }
 
-        .nav { display: flex; flex-direction: column; gap: 4px; }
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
 
         .nav-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 10px 12px; border-radius: var(--radius-sm);
-            color: var(--text-dim); cursor: pointer; border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-dim);
+            cursor: pointer;
+            border: 1px solid transparent;
             transition: background 0.12s, color 0.12s, border-color 0.12s;
-            font-size: 13px; user-select: none;
+            font-size: 13px;
+            user-select: none;
         }
 
-        .nav-item:hover { background: var(--panel-2); color: var(--text); }
+        .nav-item:hover {
+            background: var(--panel-2);
+            color: var(--text);
+        }
+
         .nav-item.active {
-            background: var(--accent-soft); color: var(--text);
+            background: var(--accent-soft);
+            color: var(--text);
             border-color: rgba(99, 102, 241, 0.35);
         }
-        .nav-item svg { flex-shrink: 0; width: 16px; height: 16px; opacity: 0.85; }
-        .nav-item.active svg { color: var(--accent); opacity: 1; }
+
+        .nav-item svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            opacity: 0.85;
+        }
+
+        .nav-item.active svg {
+            color: var(--accent);
+            opacity: 1;
+        }
 
         .sidebar-footer {
-            margin-top: auto; padding: 12px 10px;
+            margin-top: auto;
+            padding: 12px 10px;
             border-top: 1px solid var(--border-soft);
-            font-size: 11px; color: var(--text-faint); line-height: 1.6;
+            font-size: 11px;
+            color: var(--text-faint);
+            line-height: 1.6;
         }
 
         .status-dot {
-            display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-            background: var(--green); margin-right: 6px; vertical-align: middle;
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            margin-right: 6px;
+            vertical-align: middle;
             box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
         }
-        .status-dot.mock { background: var(--yellow); box-shadow: 0 0 8px rgba(234, 179, 8, 0.6); }
-        .status-dot.err  { background: var(--red);    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
 
-        .main { padding: 32px 40px 60px; max-width: 1200px; width: 100%; }
-
-        .page-head { margin-bottom: 24px; }
-        .page-title {
-            font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
-            margin: 0 0 6px; display: flex; align-items: center; gap: 10px;
+        .status-dot.mock {
+            background: var(--yellow);
+            box-shadow: 0 0 8px rgba(234, 179, 8, 0.6);
         }
-        .page-title svg { width: 20px; height: 20px; color: var(--accent); }
-        .page-desc { color: var(--text-dim); font-size: 13px; max-width: 720px; }
+
+        .status-dot.err {
+            background: var(--red);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+
+        .main {
+            padding: 32px 40px 60px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .page-head {
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin: 0 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .page-desc {
+            color: var(--text-dim);
+            font-size: 13px;
+            max-width: 720px;
+        }
 
         .card {
-            background: var(--panel); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .card-head {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 16px; border-bottom: 1px solid var(--border-soft);
-            background: var(--panel-2); gap: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-soft);
+            background: var(--panel-2);
+            gap: 12px;
         }
 
         .card-title {
-            font-size: 12px; font-weight: 600; color: var(--text-dim);
-            text-transform: uppercase; letter-spacing: 0.06em;
-            display: flex; align-items: center; gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .card-actions { display: flex; gap: 6px; }
+        .card-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
 
         .file-pill {
             text-transform: none;
@@ -140,13 +257,29 @@
             font-size: 11px;
         }
 
-        /* ---------- Attachments ---------- */
+        .toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-dim);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle input {
+            accent-color: var(--accent);
+        }
+
         .dropzone {
             padding: 32px 20px;
             border: 2px dashed var(--border);
             border-radius: var(--radius-sm);
             margin: 16px;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
             color: var(--text-dim);
             cursor: pointer;
             transition: border-color 0.12s, background 0.12s, color 0.12s;
@@ -165,17 +298,33 @@
             color: var(--accent);
         }
 
-        .dropzone svg { width: 32px; height: 32px; opacity: 0.7; }
-        .dropzone-title { font-weight: 600; font-size: 14px; }
-        .dropzone-hint { font-size: 12px; color: var(--text-faint); }
+        .dropzone svg {
+            width: 32px;
+            height: 32px;
+            opacity: 0.7;
+        }
+
+        .dropzone-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .dropzone-hint {
+            font-size: 12px;
+            color: var(--text-faint);
+        }
 
         .files-list {
-            display: flex; flex-direction: column; gap: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
             padding: 0 16px 16px;
         }
 
         .file-chip {
-            display: flex; align-items: center; gap: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 8px 12px;
             background: var(--panel-2);
             border: 1px solid var(--border);
@@ -183,518 +332,752 @@
             font-size: 13px;
             transition: border-color 0.12s;
         }
-        .file-chip:hover { border-color: #333a4d; }
-        .file-chip svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+
+        .file-chip:hover {
+            border-color: #333a4d;
+        }
+
+        .file-chip svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
         .file-chip-name {
-            flex: 1; min-width: 0;
+            flex: 1;
+            min-width: 0;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
+
         .file-chip-size {
-            color: var(--text-faint); font-size: 11px;
+            color: var(--text-faint);
+            font-size: 11px;
             font-family: 'JetBrains Mono', monospace;
         }
+
         .file-chip-remove {
-            background: transparent; border: 0; cursor: pointer;
-            color: var(--text-faint); padding: 2px 6px; border-radius: 4px;
-            font-size: 16px; line-height: 1; font-family: inherit;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            color: var(--text-faint);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 16px;
+            line-height: 1;
+            font-family: inherit;
         }
-        .file-chip-remove:hover { background: rgba(239,68,68,0.15); color: #f87171; }
-        .file-chip.loading { opacity: 0.6; }
-        .file-chip.error { border-color: rgba(239,68,68,0.4); }
+
+        .file-chip-remove:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
+
+        .file-chip.loading {
+            opacity: 0.6;
+        }
+
+        .file-chip.error {
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
         .file-chip-error {
-            color: #f87171; font-size: 11px;
+            color: #f87171;
+            font-size: 11px;
             font-family: 'Inter', sans-serif;
         }
 
         textarea {
-            width: 100%; min-height: 120px; padding: 16px;
-            background: transparent; color: var(--text);
-            border: 0; outline: 0; resize: vertical;
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            background: transparent;
+            color: var(--text);
+            border: 0;
+            outline: 0;
+            resize: vertical;
             font-family: 'JetBrains Mono', 'Consolas', monospace;
-            font-size: 13px; line-height: 1.6; tab-size: 4;
+            font-size: 13px;
+            line-height: 1.6;
+            tab-size: 4;
         }
-        textarea::placeholder { color: var(--text-faint); }
+
+        textarea::placeholder {
+            color: var(--text-faint);
+        }
 
         .btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 14px; border-radius: var(--radius-sm);
-            font-family: inherit; font-size: 13px; font-weight: 500;
-            border: 1px solid var(--border); background: var(--panel-2);
-            color: var(--text-dim); cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            color: var(--text-dim);
+            cursor: pointer;
             transition: background 0.12s, color 0.12s, border-color 0.12s;
         }
+
         .btn:hover:not(:disabled) {
-            background: #232838; color: var(--text); border-color: #333a4d;
+            background: #232838;
+            color: var(--text);
+            border-color: #333a4d;
         }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn svg { width: 14px; height: 14px; }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn svg {
+            width: 14px;
+            height: 14px;
+        }
 
         .btn-primary {
-            background: var(--accent); border-color: var(--accent);
-            color: #fff; font-weight: 600; padding: 9px 18px;
-        }
-        .btn-primary:hover:not(:disabled) {
-            background: var(--accent-hover); border-color: var(--accent-hover); color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            padding: 9px 18px;
         }
 
-        .btn-sm { padding: 5px 10px; font-size: 12px; }
+        .btn-primary:hover:not(:disabled) {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
 
         .run-row {
-            display: flex; align-items: center; gap: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin: 16px 0 24px;
         }
 
         .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff;
-            border-radius: 50%; animation: spin 0.7s linear infinite;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
             display: inline-block;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .hint { color: var(--text-faint); font-size: 12px; }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hint {
+            color: var(--text-faint);
+            font-size: 12px;
+        }
 
         .out-wrap {
-            padding: 16px; overflow-x: auto;
+            padding: 16px;
+            overflow-x: auto;
             font-family: 'JetBrains Mono', 'Consolas', monospace;
-            font-size: 13px; line-height: 1.6;
-            white-space: pre-wrap; word-break: break-word;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
             min-height: 60px;
         }
+
         .out-wrap:empty::before {
             content: "Результат появится здесь";
-            color: var(--text-faint); font-family: 'Inter', sans-serif;
+            color: var(--text-faint);
+            font-family: 'Inter', sans-serif;
         }
 
-        .k { color: #8ab4ff; } .s { color: #c3e88d; }
-        .n { color: #f78c6c; } .b { color: #c792ea; }
-        .null { color: #c792ea; }
+        .k {
+            color: #8ab4ff;
+        }
+
+        .s {
+            color: #c3e88d;
+        }
+
+        .n {
+            color: #f78c6c;
+        }
+
+        .b {
+            color: #c792ea;
+        }
+
+        .null {
+            color: #c792ea;
+        }
 
         .finding {
-            display: flex; gap: 12px;
-            padding: 12px 14px; border-radius: var(--radius-sm);
+            display: flex;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
             background: var(--panel-2);
             border-left: 3px solid var(--border);
             margin-bottom: 8px;
         }
-        .finding.high { border-left-color: var(--red); }
-        .finding.mid  { border-left-color: var(--yellow); }
-        .finding.low  { border-left-color: var(--accent); }
 
-        .finding-body { flex: 1; min-width: 0; }
+        .finding.high {
+            border-left-color: var(--red);
+        }
+
+        .finding.mid {
+            border-left-color: var(--yellow);
+        }
+
+        .finding.low {
+            border-left-color: var(--accent);
+        }
+
+        .finding-body {
+            flex: 1;
+            min-width: 0;
+        }
+
         .finding-meta {
-            display: flex; gap: 8px; align-items: center;
-            margin-bottom: 4px; font-size: 12px; color: var(--text-faint);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: var(--text-faint);
         }
 
         .badge {
-            display: inline-block; padding: 2px 8px; border-radius: 6px;
-            font-size: 11px; font-weight: 600;
-            letter-spacing: 0.03em; text-transform: uppercase;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
-        .badge.high { background: rgba(239,68,68,0.15); color: #f87171; }
-        .badge.mid  { background: rgba(234,179,8,0.15); color: #facc15; }
-        .badge.low  { background: rgba(99,102,241,0.15); color: #a5b4fc; }
-        .badge.rule { background: rgba(99,102,241,0.15); color: #a5b4fc; font-family: 'JetBrains Mono', monospace; }
 
-        .finding-msg { font-size: 13px; color: var(--text); }
-        .finding-fix {
-            margin-top: 6px; font-size: 12px; color: var(--text-dim);
+        .badge.high {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
+
+        .badge.mid {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+        }
+
+        .badge.low {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+        }
+
+        .badge.rule {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
             font-family: 'JetBrains Mono', monospace;
-            background: rgba(0,0,0,0.25); padding: 6px 10px;
-            border-radius: 6px; white-space: pre-wrap;
         }
 
-        .empty {
-            padding: 20px; text-align: center;
-            color: var(--text-faint); font-family: 'Inter', sans-serif;
-        }
-
-        .error-box {
-            padding: 14px 16px; border-radius: var(--radius-sm);
-            background: rgba(239,68,68,0.08);
-            border: 1px solid rgba(239,68,68,0.25);
-            color: #fca5a5; font-family: 'Inter', sans-serif; font-size: 13px;
-        }
-
-        .streaming::after {
-            content: "▍"; color: var(--accent);
-            animation: blink 0.9s steps(2, start) infinite;
-            margin-left: 2px;
-        }
-        @keyframes blink { to { visibility: hidden; } }
-
-        .live-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px; line-height: 1.6;
-            white-space: pre-wrap; word-break: break-word;
-            color: var(--text-dim);
-        }
-
-        .code-view {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px; line-height: 1.6;
-            white-space: pre-wrap; word-break: break-word;
+        .finding-msg {
+            font-size: 13px;
             color: var(--text);
         }
 
-        .toast {
-            position: fixed; bottom: 24px; right: 24px;
-            background: var(--panel-2); border: 1px solid var(--border);
-            color: var(--text); padding: 10px 16px;
-            border-radius: var(--radius-sm); font-size: 13px;
-            opacity: 0; transform: translateY(10px);
-            transition: opacity 0.2s, transform 0.2s;
-            pointer-events: none; z-index: 100;
+        .finding-fix {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 6px 10px;
+            border-radius: 6px;
+            white-space: pre-wrap;
         }
-        .toast.show { opacity: 1; transform: translateY(0); }
+
+        .empty {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-faint);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .error-box {
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+
+        .streaming::after {
+            content: "▍";
+            color: var(--accent);
+            animation: blink 0.9s steps(2, start) infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        .live-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: var(--text-dim);
+        }
+
+        /* ---- Diff ---- */
+        .code-view {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .code-view .ln {
+            display: block;
+            padding: 0 8px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .code-view .ln.add {
+            background: rgba(34, 197, 94, 0.12);
+            border-left: 3px solid var(--green);
+            margin-left: -3px;
+        }
+
+        .code-view .ln.dim {
+            opacity: 0.35;
+        }
+
+        /* ---- Stop reason ---- */
+        .stop-reason {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            margin-bottom: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .stop-reason.ok {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
+        .stop-reason.warn {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #facc15;
+        }
+
+        .stop-reason.err {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         @media (max-width: 820px) {
-            .app { grid-template-columns: 1fr; }
-            .sidebar {
-                position: relative; height: auto;
-                border-right: 0; border-bottom: 1px solid var(--border);
+            .app {
+                grid-template-columns: 1fr;
             }
-            .main { padding: 24px 20px 60px; }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .main {
+                padding: 24px 20px 60px;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="app">
+    <div class="app">
 
-    <aside class="sidebar">
-        <div class="brand">
-            <div class="brand-logo">Q</div>
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">Q</div>
+                <div>
+                    <div class="brand-title">Qwen Web</div>
+                    <div class="brand-sub">Анализ кода</div>
+                </div>
+            </div>
+
             <div>
-                <div class="brand-title">Qwen Web</div>
-                <div class="brand-sub">Анализ кода</div>
+                <div class="nav-label">Задачи</div>
+                <nav class="nav" id="nav"></nav>
             </div>
-        </div>
 
-        <div>
-            <div class="nav-label">Задачи</div>
-            <nav class="nav" id="nav"></nav>
-        </div>
+            <div class="sidebar-footer" id="status-bar">
+                <span class="status-dot mock"></span>загрузка...
+            </div>
+        </aside>
 
-        <div class="sidebar-footer" id="status-bar">
-            <span class="status-dot mock"></span>загрузка...
-        </div>
-    </aside>
+        <main class="main">
 
-    <main class="main">
+            <div class="page-head">
+                <h1 class="page-title" id="page-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" id="page-icon"></svg>
+                    <span id="page-name">Задача</span>
+                </h1>
+                <div class="page-desc" id="page-desc"></div>
+            </div>
 
-        <div class="page-head">
-            <h1 class="page-title" id="page-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="page-icon"></svg>
-                <span id="page-name">Задача</span>
-            </h1>
-            <div class="page-desc" id="page-desc"></div>
-        </div>
-
-        <div class="card">
-            <div class="card-head">
-                <div class="card-title">Файлы</div>
-                <div class="card-actions">
-                    <button class="btn btn-sm" onclick="openFilePicker()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                        Добавить
-                    </button>
-                    <button class="btn btn-sm" onclick="clearFiles()" id="clear-files-btn" style="display:none">Убрать все</button>
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-title">Файлы</div>
+                    <div class="card-actions">
+                        <button class="btn btn-sm" onclick="openFilePicker()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Добавить
+                        </button>
+                        <button class="btn btn-sm" onclick="clearFiles()" id="clear-files-btn"
+                            style="display:none">Убрать все</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="dropzone" id="dropzone">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <div class="dropzone-title">Перетащи файлы сюда</div>
-                <div class="dropzone-hint" id="dropzone-hint">или нажми «Добавить»</div>
-            </div>
-
-            <div class="files-list" id="files-list"></div>
-
-            <input type="file" id="file-input" style="display:none" multiple onchange="onFilePick(event)">
-        </div>
-
-        <div class="card">
-            <div class="card-head">
-                <div class="card-title">Дополнительный контекст (необязательно)</div>
-                <div class="card-actions">
-                    <button class="btn btn-sm" onclick="clearText()">Очистить</button>
+                <div class="dropzone" id="dropzone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <div class="dropzone-title">Перетащи файлы сюда</div>
+                    <div class="dropzone-hint" id="dropzone-hint">или нажми «Добавить»</div>
                 </div>
+
+                <div class="files-list" id="files-list"></div>
+
+                <input type="file" id="file-input" style="display:none" multiple onchange="onFilePick(event)">
             </div>
-            <textarea id="text" spellcheck="false" placeholder="Например: это код ответчика ADS-B IN, собран под MISRA C:2012, компилятор GCC ARM..."></textarea>
-        </div>
 
-        <div class="run-row">
-            <button class="btn btn-primary" id="run-btn" onclick="run()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-                Запустить
-            </button>
-            <span class="hint" id="hint"></span>
-        </div>
-
-        <!-- Карточка для JSON-результата (params_check, misra, adsb) -->
-        <div class="card" id="result-card" style="display:none">
-            <div class="card-head">
-                <div class="card-title">Результат</div>
-                <div class="card-actions">
-                    <button class="btn btn-sm" onclick="copyResult()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        Копировать
-                    </button>
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-title">Дополнительный контекст (необязательно)</div>
+                    <div class="card-actions">
+                        <button class="btn btn-sm" onclick="clearText()">Очистить</button>
+                    </div>
                 </div>
+                <textarea id="text" spellcheck="false"
+                    placeholder="Например: это код ответчика ADS-B IN, собран под MISRA C:2012, компилятор GCC ARM..."></textarea>
             </div>
-            <div class="out-wrap" id="out"></div>
-        </div>
 
-        <!-- Карточка для файла-результата (headers) -->
-        <div class="card" id="code-result-card" style="display:none">
-            <div class="card-head">
-                <div class="card-title">
-                    Сгенерированный файл
-                    <span class="file-pill" id="result-pill" style="display:none"></span>
-                </div>
-                <div class="card-actions">
-                    <button class="btn btn-sm" onclick="downloadResult()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Скачать
-                    </button>
-                    <button class="btn btn-sm" onclick="copyCodeResult()">Копировать</button>
-                </div>
+            <div class="run-row">
+                <button class="btn btn-primary" id="run-btn" onclick="onRunClick()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" id="run-icon">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    <span id="run-label">Запустить</span>
+                </button>
+                <span class="hint" id="hint"></span>
             </div>
-            <div class="out-wrap" id="code-result"></div>
-        </div>
 
-        <div class="card" id="raw-card" style="display:none">
-            <div class="card-head">
-                <div class="card-title">Сырой ответ модели</div>
-                <div class="card-actions">
-                    <button class="btn btn-sm" onclick="toggleRaw(this)">Свернуть</button>
+            <div id="stop-reason" class="stop-reason" style="display:none"></div>
+
+            <div class="card" id="result-card" style="display:none">
+                <div class="card-head">
+                    <div class="card-title">Результат</div>
+                    <div class="card-actions">
+                        <button class="btn btn-sm" onclick="copyResult()">Копировать</button>
+                    </div>
                 </div>
+                <div class="out-wrap" id="out"></div>
             </div>
-            <div class="out-wrap" id="raw" style="font-size:12px; color: var(--text-dim)"></div>
-        </div>
 
-    </main>
-</div>
+            <div class="card" id="code-result-card" style="display:none">
+                <div class="card-head">
+                    <div class="card-title">
+                        Сгенерированный файл
+                        <span class="file-pill" id="result-pill" style="display:none"></span>
+                    </div>
+                    <div class="card-actions">
+                        <label class="toggle" title="Показать только добавленные строки, остальные приглушить">
+                            <input type="checkbox" id="only-changes" checked onchange="renderCodeResult()">
+                            только изменения
+                        </label>
+                        <button class="btn btn-sm" onclick="downloadResult()">Скачать</button>
+                        <button class="btn btn-sm" onclick="copyCodeResult()">Копировать</button>
+                    </div>
+                </div>
+                <div class="out-wrap" id="code-result" style="padding:0"></div>
+            </div>
 
-<div class="toast" id="toast"></div>
+            <div class="card" id="raw-card" style="display:none">
+                <div class="card-head">
+                    <div class="card-title">Сырой ответ модели</div>
+                    <div class="card-actions">
+                        <button class="btn btn-sm" onclick="toggleRaw(this)">Свернуть</button>
+                    </div>
+                </div>
+                <div class="out-wrap" id="raw" style="font-size:12px; color: var(--text-dim)"></div>
+            </div>
 
-<script>
-const ICONS = {
-    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
-    doc:    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line>',
-    check:  '<polyline points="20 6 9 17 4 12"></polyline>',
-    plane:  '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>',
-    dot:    '<circle cx="12" cy="12" r="3"></circle>',
-    file:   '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline>',
-};
+        </main>
+    </div>
 
-let TASKS = [];
-let current = null;
-let ATTACHMENTS = [];
-let CODE_RESULT = null;      // результат для задачи headers
-let CODE_RESULT_NAME = '';   // имя файла результата
-const LS_TEXT = 'qwenweb.text.';
-const LS_TASK = 'qwenweb.task';
+    <div class="toast" id="toast"></div>
 
-let LIMITS = { max_files: 20, max_file_kb: 256, max_total_kb: 1024 };
+    <script>
+        const ICONS = {
+            shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
+            doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line>',
+            check: '<polyline points="20 6 9 17 4 12"></polyline>',
+            plane: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>',
+            dot: '<circle cx="12" cy="12" r="3"></circle>',
+            file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline>',
+        };
 
-const $ = id => document.getElementById(id);
-let uid = 0;
+        let TASKS = [];
+        let current = null;
+        let ATTACHMENTS = [];
+        let CODE_RESULT = null;
+        let CODE_RESULT_NAME = '';
+        let ORIGINAL_SENT = '';
+        let RUNNING = false;
+        let CURRENT_ABORT = null;
+        let START_TIME = 0;
+        let CHUNK_COUNT = 0;
 
-// ---------- Init ----------
-async function init() {
-    try {
-        const r = await fetch('/api/tasks');
-        TASKS = await r.json();
-    } catch { TASKS = []; }
+        const LS_TEXT = 'qwenweb.text.';
+        const LS_TASK = 'qwenweb.task';
 
-    try {
-        const r = await fetch('/api/limits');
-        LIMITS = await r.json();
-        $('dropzone-hint').textContent =
-            `или нажми «Добавить» · до ${LIMITS.max_files} файлов, ` +
-            `${LIMITS.max_file_kb} КБ каждый, ${LIMITS.max_total_kb} КБ суммарно`;
-    } catch {}
+        let LIMITS = { max_files: 20, max_file_kb: 256, max_total_kb: 1024 };
 
-    renderNav();
+        const $ = id => document.getElementById(id);
+        let uid = 0;
 
-    const savedTask = localStorage.getItem(LS_TASK);
-    if (savedTask && TASKS.find(t => t.key === savedTask)) selectTask(savedTask);
-    else if (TASKS.length) selectTask(TASKS[0].key);
+        // ---------- Init ----------
+        async function init() {
+            try {
+                const r = await fetch('/api/tasks');
+                TASKS = await r.json();
+            } catch { TASKS = []; }
 
-    loadStatus();
-}
+            try {
+                const r = await fetch('/api/limits');
+                LIMITS = await r.json();
+                $('dropzone-hint').textContent =
+                    `или нажми «Добавить» · до ${LIMITS.max_files} файлов, ` +
+                    `${LIMITS.max_file_kb} КБ каждый, ${LIMITS.max_total_kb} КБ суммарно`;
+            } catch { }
 
-async function loadStatus() {
-    try {
-        const s = await (await fetch('/api/status')).json();
-        const dotClass = s.mode === 'mock' ? 'mock' : '';
-        $('status-bar').innerHTML =
-            `<span class="status-dot ${dotClass}"></span>` +
-            `<div><b>${s.mode}</b> · ${escapeHtml(s.model)}</div>` +
-            `<div style="opacity:.7">${escapeHtml(s.url)} · T=${s.temperature}</div>`;
-    } catch {
-        $('status-bar').innerHTML = `<span class="status-dot err"></span>нет связи с API`;
-    }
-}
+            renderNav();
 
-function renderNav() {
-    const nav = $('nav');
-    nav.innerHTML = '';
-    for (const t of TASKS) {
-        const item = document.createElement('div');
-        item.className = 'nav-item';
-        item.dataset.key = t.key;
-        item.innerHTML = `
+            const savedTask = localStorage.getItem(LS_TASK);
+            if (savedTask && TASKS.find(t => t.key === savedTask)) selectTask(savedTask);
+            else if (TASKS.length) selectTask(TASKS[0].key);
+
+            loadStatus();
+        }
+
+        async function loadStatus() {
+            try {
+                const s = await (await fetch('/api/status')).json();
+                const dotClass = s.mode === 'mock' ? 'mock' : '';
+                $('status-bar').innerHTML =
+                    `<span class="status-dot ${dotClass}"></span>` +
+                    `<div><b>${s.mode}</b> · ${escapeHtml(s.model)}</div>` +
+                    `<div style="opacity:.7">${escapeHtml(s.url)} · T=${s.temperature}</div>`;
+            } catch {
+                $('status-bar').innerHTML = `<span class="status-dot err"></span>нет связи с API`;
+            }
+        }
+
+        function renderNav() {
+            const nav = $('nav');
+            nav.innerHTML = '';
+            for (const t of TASKS) {
+                const item = document.createElement('div');
+                item.className = 'nav-item';
+                item.dataset.key = t.key;
+                item.innerHTML = `
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 ${ICONS[t.icon] || ICONS.dot}
             </svg>
             <span>${escapeHtml(t.name)}</span>
         `;
-        item.onclick = () => selectTask(t.key);
-        nav.appendChild(item);
-    }
-}
-
-function selectTask(key) {
-    current = key;
-    localStorage.setItem(LS_TASK, key);
-
-    document.querySelectorAll('.nav-item').forEach(el => {
-        el.classList.toggle('active', el.dataset.key === key);
-    });
-
-    const t = TASKS.find(x => x.key === key);
-    if (!t) return;
-
-    $('page-name').textContent = t.name;
-    $('page-desc').textContent = t.desc;
-    $('page-icon').innerHTML = ICONS[t.icon] || ICONS.dot;
-
-    $('text').value = localStorage.getItem(LS_TEXT + key) || '';
-
-    $('result-card').style.display = 'none';
-    $('code-result-card').style.display = 'none';
-    $('raw-card').style.display = 'none';
-    CODE_RESULT = null;
-    $('result-pill').style.display = 'none';
-}
-
-$('text')?.addEventListener('input', () => {
-    if (current) localStorage.setItem(LS_TEXT + current, $('text').value);
-});
-
-function clearText() {
-    $('text').value = '';
-    if (current) localStorage.removeItem(LS_TEXT + current);
-}
-
-// ---------- Attachments ----------
-function openFilePicker() { $('file-input').click(); }
-
-function onFilePick(e) {
-    const files = Array.from(e.target.files || []);
-    if (files.length) addFiles(files);
-    e.target.value = '';
-}
-
-async function addFiles(files) {
-    for (const f of files) {
-        if (ATTACHMENTS.length >= LIMITS.max_files) {
-            toast(`Максимум ${LIMITS.max_files} файлов`);
-            break;
+                item.onclick = () => selectTask(t.key);
+                nav.appendChild(item);
+            }
         }
 
-        const id = ++uid;
-        const item = { id, name: f.name, size: f.size, content: '', loading: true, error: null };
-        ATTACHMENTS.push(item);
-        renderFiles();
+        function selectTask(key) {
+            current = key;
+            localStorage.setItem(LS_TASK, key);
 
-        if (f.size > LIMITS.max_file_kb * 1024) {
-            item.loading = false;
-            item.error = `больше ${LIMITS.max_file_kb} КБ`;
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.toggle('active', el.dataset.key === key);
+            });
+
+            const t = TASKS.find(x => x.key === key);
+            if (!t) return;
+
+            $('page-name').textContent = t.name;
+            $('page-desc').textContent = t.desc;
+            $('page-icon').innerHTML = ICONS[t.icon] || ICONS.dot;
+
+            $('text').value = localStorage.getItem(LS_TEXT + key) || '';
+
+            $('result-card').style.display = 'none';
+            $('code-result-card').style.display = 'none';
+            $('raw-card').style.display = 'none';
+            $('stop-reason').style.display = 'none';
+            CODE_RESULT = null;
+            ORIGINAL_SENT = '';
+            $('result-pill').style.display = 'none';
+        }
+
+        $('text')?.addEventListener('input', () => {
+            if (current) localStorage.setItem(LS_TEXT + current, $('text').value);
+        });
+
+        function clearText() {
+            $('text').value = '';
+            if (current) localStorage.removeItem(LS_TEXT + current);
+        }
+
+        // ---------- Attachments ----------
+        function openFilePicker() { $('file-input').click(); }
+
+        function onFilePick(e) {
+            const files = Array.from(e.target.files || []);
+            if (files.length) addFiles(files);
+            e.target.value = '';
+        }
+
+        async function addFiles(files) {
+            for (const f of files) {
+                if (ATTACHMENTS.length >= LIMITS.max_files) {
+                    toast(`Максимум ${LIMITS.max_files} файлов`);
+                    break;
+                }
+
+                const id = ++uid;
+                const item = { id, name: f.name, size: f.size, content: '', loading: true, error: null };
+                ATTACHMENTS.push(item);
+                renderFiles();
+
+                if (f.size > LIMITS.max_file_kb * 1024) {
+                    item.loading = false;
+                    item.error = `больше ${LIMITS.max_file_kb} КБ`;
+                    renderFiles();
+                    continue;
+                }
+
+                const isText = await isProbablyText(f);
+                if (!isText) {
+                    item.loading = false;
+                    item.error = 'бинарный файл';
+                    renderFiles();
+                    continue;
+                }
+
+                try {
+                    item.content = await f.text();
+                    item.loading = false;
+                } catch {
+                    item.loading = false;
+                    item.error = 'не удалось прочитать';
+                }
+                renderFiles();
+            }
+        }
+
+        async function isProbablyText(file) {
+            const slice = file.slice(0, 4096);
+            const buf = await slice.arrayBuffer();
+            const bytes = new Uint8Array(buf);
+            for (let i = 0; i < bytes.length; i++) {
+                if (bytes[i] === 0) return false;
+            }
+            return true;
+        }
+
+        function removeFile(id) {
+            ATTACHMENTS = ATTACHMENTS.filter(f => f.id !== id);
             renderFiles();
-            continue;
         }
 
-        const isText = await isProbablyText(f);
-        if (!isText) {
-            item.loading = false;
-            item.error = 'бинарный файл';
+        function clearFiles() {
+            ATTACHMENTS = [];
             renderFiles();
-            continue;
         }
 
-        try {
-            item.content = await f.text();
-            item.loading = false;
-        } catch {
-            item.loading = false;
-            item.error = 'не удалось прочитать';
-        }
-        renderFiles();
-    }
-}
+        function renderFiles() {
+            const list = $('files-list');
+            list.innerHTML = '';
 
-async function isProbablyText(file) {
-    const slice = file.slice(0, 4096);
-    const buf = await slice.arrayBuffer();
-    const bytes = new Uint8Array(buf);
-    for (let i = 0; i < bytes.length; i++) {
-        if (bytes[i] === 0) return false;
-    }
-    return true;
-}
+            const valid = ATTACHMENTS.filter(f => !f.error && !f.loading);
+            const totalBytes = valid.reduce((s, f) => s + f.content.length, 0);
 
-function removeFile(id) {
-    ATTACHMENTS = ATTACHMENTS.filter(f => f.id !== id);
-    renderFiles();
-}
+            for (const f of ATTACHMENTS) {
+                const chip = document.createElement('div');
+                chip.className = 'file-chip' +
+                    (f.loading ? ' loading' : '') +
+                    (f.error ? ' error' : '');
 
-function clearFiles() {
-    ATTACHMENTS = [];
-    renderFiles();
-}
+                const sizeText = f.error
+                    ? `<span class="file-chip-error">${escapeHtml(f.error)}</span>`
+                    : `<span class="file-chip-size">${formatSize(f.size)}</span>`;
 
-function renderFiles() {
-    const list = $('files-list');
-    list.innerHTML = '';
-
-    const valid = ATTACHMENTS.filter(f => !f.error && !f.loading);
-    const totalBytes = valid.reduce((s, f) => s + f.content.length, 0);
-
-    for (const f of ATTACHMENTS) {
-        const chip = document.createElement('div');
-        chip.className = 'file-chip' +
-            (f.loading ? ' loading' : '') +
-            (f.error ? ' error' : '');
-
-        const sizeText = f.error
-            ? `<span class="file-chip-error">${escapeHtml(f.error)}</span>`
-            : `<span class="file-chip-size">${formatSize(f.size)}</span>`;
-
-        chip.innerHTML = `
+                chip.innerHTML = `
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 ${ICONS.file}
             </svg>
@@ -702,249 +1085,310 @@ function renderFiles() {
             ${sizeText}
             <button class="file-chip-remove" title="Убрать">×</button>
         `;
-        chip.querySelector('.file-chip-remove').onclick = () => removeFile(f.id);
-        list.appendChild(chip);
-    }
+                chip.querySelector('.file-chip-remove').onclick = () => removeFile(f.id);
+                list.appendChild(chip);
+            }
 
-    $('clear-files-btn').style.display = ATTACHMENTS.length ? '' : 'none';
+            $('clear-files-btn').style.display = ATTACHMENTS.length ? '' : 'none';
 
-    if (totalBytes > LIMITS.max_total_kb * 1024) {
-        const warn = document.createElement('div');
-        warn.className = 'file-chip error';
-        warn.innerHTML = `<span class="file-chip-error">Суммарный размер превышает ${LIMITS.max_total_kb} КБ — сервер отклонит запрос</span>`;
-        list.appendChild(warn);
-    }
-}
-
-function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
-}
-
-// ---------- Dropzone ----------
-(function setupDnD() {
-    const dz = $('dropzone');
-    let depth = 0;
-    const stop = e => { e.preventDefault(); e.stopPropagation(); };
-
-    dz.addEventListener('click', openFilePicker);
-
-    dz.addEventListener('dragenter', e => {
-        if (!e.dataTransfer?.types?.includes('Files')) return;
-        stop(e); depth++;
-        dz.classList.add('drag');
-    });
-
-    dz.addEventListener('dragover', e => {
-        if (!e.dataTransfer?.types?.includes('Files')) return;
-        stop(e);
-        e.dataTransfer.dropEffect = 'copy';
-    });
-
-    dz.addEventListener('dragleave', e => {
-        stop(e);
-        depth = Math.max(0, depth - 1);
-        if (depth === 0) dz.classList.remove('drag');
-    });
-
-    dz.addEventListener('drop', e => {
-        stop(e);
-        depth = 0;
-        dz.classList.remove('drag');
-        const files = Array.from(e.dataTransfer?.files || []);
-        if (files.length) addFiles(files);
-    });
-
-    window.addEventListener('dragover', e => e.preventDefault());
-    window.addEventListener('drop', e => {
-        if (e.target.closest('.dropzone')) return;
-        e.preventDefault();
-    });
-})();
-
-// ---------- Run ----------
-async function run() {
-    if (!current) return;
-
-    const validFiles = ATTACHMENTS.filter(f => !f.error && !f.loading);
-    const extra = $('text').value.trim();
-
-    if (!validFiles.length && !extra) {
-        toast('Добавь файл или напиши контекст');
-        return;
-    }
-
-    const isHeaders = (current === 'headers');
-
-    const btn = $('run-btn');
-    btn.disabled = true;
-    btn.innerHTML = `<span class="spinner"></span> Анализ...`;
-    $('hint').textContent = isHeaders
-        ? 'Qwen расставляет заголовки, файл будет доступен для скачивания...'
-        : 'Qwen генерирует ответ...';
-
-    // Показываем правильную карточку и подготавливаем live-буфер
-    if (isHeaders) {
-        $('result-card').style.display = 'none';
-        $('code-result-card').style.display = 'block';
-        $('raw-card').style.display = 'none';
-        $('code-result').innerHTML = `<span class="live-text streaming"></span>`;
-        $('result-pill').style.display = 'none';
-        CODE_RESULT = null;
-    } else {
-        $('result-card').style.display = 'block';
-        $('code-result-card').style.display = 'none';
-        $('raw-card').style.display = 'none';
-        $('out').innerHTML = `<span class="live-text streaming"></span>`;
-    }
-
-    const liveEl = isHeaders
-        ? $('code-result').querySelector('.live-text')
-        : $('out').querySelector('.live-text');
-
-    const body = {
-        task: current,
-        code: extra,
-        files: validFiles.map(f => ({ name: f.name, content: f.content })),
-    };
-
-    try {
-        await streamRun(body, {
-            onChunk: (text) => {
-                liveEl.textContent += text;
-                if (isHeaders) $('code-result').scrollTop = $('code-result').scrollHeight;
-                else $('out').scrollTop = $('out').scrollHeight;
-            },
-            onDone: ({ parsed, raw, kind, code }) => {
-                if (kind === 'code') {
-                    // headers: показываем файл + кнопки скачать/копировать
-                    CODE_RESULT = code || raw;
-                    CODE_RESULT_NAME = resultFileName();
-                    $('code-result').innerHTML =
-                        `<div class="code-view">${escapeHtml(CODE_RESULT)}</div>`;
-                    $('result-pill').textContent = CODE_RESULT_NAME;
-                    $('result-pill').style.display = '';
-                } else {
-                    // обычный JSON-результат
-                    $('out').dataset.copy = parsed
-                        ? JSON.stringify(parsed, null, 2)
-                        : raw;
-                    $('out').innerHTML = '';
-                    if (parsed) renderStructured($('out'), parsed);
-                    else $('out').innerHTML =
-                        `<div style="font-family:'JetBrains Mono',monospace;white-space:pre-wrap">${escapeHtml(raw)}</div>`;
-                    $('raw-card').style.display = 'block';
-                    $('raw').textContent = raw || '(пусто)';
-                }
-            },
-            onError: (msg) => renderError(msg),
-        });
-    } catch (e) {
-        renderError('Ошибка сети: ' + e.message);
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Запустить`;
-        $('hint').textContent = '';
-    }
-}
-
-async function streamRun(body, { onChunk, onDone, onError }) {
-    const r = await fetch('/api/run_stream', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-    });
-
-    if (!r.ok || !r.body) {
-        onError(`HTTP ${r.status}: ${await r.text()}`);
-        return;
-    }
-
-    const reader = r.body.getReader();
-    const decoder = new TextDecoder('utf-8');
-    let buffer = '';
-
-    while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-
-        let idx;
-        while ((idx = buffer.indexOf('\n\n')) !== -1) {
-            const block = buffer.slice(0, idx);
-            buffer = buffer.slice(idx + 2);
-
-            const line = block.split('\n').find(l => l.startsWith('data: '));
-            if (!line) continue;
-
-            let payload;
-            try { payload = JSON.parse(line.slice(6)); } catch { continue; }
-
-            if (payload.type === 'chunk') onChunk(payload.text || '');
-            else if (payload.type === 'done') onDone({ parsed: payload.parsed, raw: payload.raw, kind: 'json' });
-            else if (payload.type === 'code_result') onDone({ raw: payload.code, code: payload.code, kind: 'code' });
-            else if (payload.type === 'error') onError(payload.message || 'неизвестная ошибка');
+            if (totalBytes > LIMITS.max_total_kb * 1024) {
+                const warn = document.createElement('div');
+                warn.className = 'file-chip error';
+                warn.innerHTML = `<span class="file-chip-error">Суммарный размер превышает ${LIMITS.max_total_kb} КБ — сервер отклонит запрос</span>`;
+                list.appendChild(warn);
+            }
         }
-    }
-}
 
-// ---------- Имя файла для скачивания ----------
-function resultFileName() {
-    const first = ATTACHMENTS.find(f => !f.error && !f.loading);
-    if (!first) return 'result_documented.c';
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+        }
 
-    const name = first.name;
-    const dot = name.lastIndexOf('.');
-    if (dot === -1) return name + '_documented.c';
-    return name.slice(0, dot) + '_documented' + name.slice(dot);
-}
+        // ---------- Dropzone ----------
+        (function setupDnD() {
+            const dz = $('dropzone');
+            let depth = 0;
+            const stop = e => { e.preventDefault(); e.stopPropagation(); };
 
-function downloadResult() {
-    if (!CODE_RESULT) return;
-    const name = CODE_RESULT_NAME || 'result_documented.c';
-    const blob = new Blob([CODE_RESULT], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast(`Скачано как ${name}`);
-}
+            dz.addEventListener('click', openFilePicker);
 
-async function copyCodeResult() {
-    if (!CODE_RESULT) return;
-    try {
-        await navigator.clipboard.writeText(CODE_RESULT);
-        toast('Скопировано в буфер');
-    } catch { toast('Не удалось скопировать'); }
-}
+            dz.addEventListener('dragenter', e => {
+                if (!e.dataTransfer?.types?.includes('Files')) return;
+                stop(e); depth++;
+                dz.classList.add('drag');
+            });
 
-// ---------- Rendering ----------
-function renderStructured(container, parsed) {
-    if (parsed.findings) { renderFindings(container, parsed.findings, 'severity'); return; }
-    if (parsed.violations) { renderFindings(container, parsed.violations, 'rule'); return; }
-    if (parsed.vectors) { container.innerHTML = highlightJson(parsed); return; }
-    container.innerHTML = highlightJson(parsed);
-}
+            dz.addEventListener('dragover', e => {
+                if (!e.dataTransfer?.types?.includes('Files')) return;
+                stop(e);
+                e.dataTransfer.dropEffect = 'copy';
+            });
 
-function renderFindings(container, items, kind) {
-    if (!items.length) {
-        container.innerHTML = `<div class="empty">Нарушений не найдено</div>`;
-        return;
-    }
-    for (const f of items) {
-        const sev = (f.severity || 'low').toLowerCase();
-        const el = document.createElement('div');
-        el.className = 'finding ' + (sev === 'high' || sev === 'mid' || sev === 'low' ? sev : 'low');
-        const badge = kind === 'rule'
-            ? `<span class="badge rule">${escapeHtml(f.rule || '?')}</span>`
-            : `<span class="badge ${sev}">${escapeHtml(sev)}</span>`;
-        el.innerHTML = `
+            dz.addEventListener('dragleave', e => {
+                stop(e);
+                depth = Math.max(0, depth - 1);
+                if (depth === 0) dz.classList.remove('drag');
+            });
+
+            dz.addEventListener('drop', e => {
+                stop(e);
+                depth = 0;
+                dz.classList.remove('drag');
+                const files = Array.from(e.dataTransfer?.files || []);
+                if (files.length) addFiles(files);
+            });
+
+            window.addEventListener('dragover', e => e.preventDefault());
+            window.addEventListener('drop', e => {
+                if (e.target.closest('.dropzone')) return;
+                e.preventDefault();
+            });
+        })();
+
+        // ---------- Run / Stop ----------
+        function onRunClick() {
+            if (RUNNING) {
+                if (CURRENT_ABORT) CURRENT_ABORT.abort();
+            } else {
+                run();
+            }
+        }
+
+        function setRunningUI(running) {
+            RUNNING = running;
+            const btn = $('run-btn');
+            const label = $('run-label');
+            const icon = $('run-icon');
+
+            if (running) {
+                btn.classList.remove('btn-primary');
+                btn.style.background = '#3a1f22';
+                btn.style.borderColor = '#7c2d34';
+                btn.style.color = '#fca5a5';
+                label.textContent = 'Остановить';
+                icon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="1"></rect>';
+            } else {
+                btn.classList.add('btn-primary');
+                btn.style.background = '';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                label.textContent = 'Запустить';
+                icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+            }
+        }
+
+        async function run() {
+            if (!current) return;
+
+            const validFiles = ATTACHMENTS.filter(f => !f.error && !f.loading);
+            const extra = $('text').value.trim();
+
+            if (!validFiles.length && !extra) {
+                toast('Добавь файл или напиши контекст');
+                return;
+            }
+
+            const isHeaders = (current === 'headers');
+            ORIGINAL_SENT = assembleOriginal(validFiles, extra);
+
+            START_TIME = Date.now();
+            CHUNK_COUNT = 0;
+
+            setRunningUI(true);
+            $('hint').textContent = 'Qwen начинает...';
+            $('stop-reason').style.display = 'none';
+
+            if (isHeaders) {
+                $('result-card').style.display = 'none';
+                $('code-result-card').style.display = 'block';
+                $('raw-card').style.display = 'none';
+                $('code-result').innerHTML = `<div style="padding:16px"><span class="live-text streaming"></span></div>`;
+                $('result-pill').style.display = 'none';
+                CODE_RESULT = null;
+            } else {
+                $('result-card').style.display = 'block';
+                $('code-result-card').style.display = 'none';
+                $('raw-card').style.display = 'none';
+                $('out').innerHTML = `<span class="live-text streaming"></span>`;
+            }
+
+            const liveEl = isHeaders
+                ? $('code-result').querySelector('.live-text')
+                : $('out').querySelector('.live-text');
+
+            const body = {
+                task: current,
+                code: extra,
+                files: validFiles.map(f => ({ name: f.name, content: f.content })),
+            };
+
+            CURRENT_ABORT = new AbortController();
+
+            try {
+                await streamRun(body, CURRENT_ABORT.signal, {
+                    onChunk: (text) => {
+                        liveEl.textContent += text;
+                        CHUNK_COUNT++;
+                        const sec = Math.round((Date.now() - START_TIME) / 1000);
+                        $('hint').textContent = `Qwen пишет... ${CHUNK_COUNT} фрагментов, ${sec} сек`;
+                        if (isHeaders) $('code-result').scrollTop = $('code-result').scrollHeight;
+                        else $('out').scrollTop = $('out').scrollHeight;
+                    },
+                    onDone: ({ parsed, raw, kind, code, meta }) => {
+                        if (kind === 'code') {
+                            CODE_RESULT = code || raw;
+                            CODE_RESULT_NAME = resultFileName();
+                            $('result-pill').textContent = CODE_RESULT_NAME;
+                            $('result-pill').style.display = '';
+                            renderCodeResult();
+                        } else {
+                            $('out').dataset.copy = parsed
+                                ? JSON.stringify(parsed, null, 2)
+                                : raw;
+                            $('out').innerHTML = '';
+                            if (parsed) renderStructured($('out'), parsed);
+                            else $('out').innerHTML =
+                                `<div style="font-family:'JetBrains Mono',monospace;white-space:pre-wrap">${escapeHtml(raw)}</div>`;
+                            $('raw-card').style.display = 'block';
+                            $('raw').textContent = raw || '(пусто)';
+                        }
+                        showStopReason(meta);
+                    },
+                    onError: (msg) => renderError(msg),
+                });
+            } catch (e) {
+                if (e.name === 'AbortError') {
+                    const partial = liveEl.textContent;
+                    renderError('Остановлено пользователем');
+                    if (partial) liveEl.classList.remove('streaming');
+                } else {
+                    renderError('Ошибка сети: ' + e.message);
+                }
+            } finally {
+                setRunningUI(false);
+                CURRENT_ABORT = null;
+                $('hint').textContent = '';
+            }
+        }
+
+        function assembleOriginal(files, extra) {
+            const parts = [];
+            for (const f of files) {
+                parts.push(`// ===== ${f.name} =====\n${f.content}`);
+            }
+            if (extra && extra.trim()) {
+                parts.push("// ===== Дополнительный контекст =====\n" + extra.trim());
+            }
+            return parts.join("\n\n");
+        }
+
+        async function streamRun(body, signal, { onChunk, onDone, onError }) {
+            const r = await fetch('/api/run_stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+                signal,
+            });
+
+            if (!r.ok || !r.body) {
+                onError(`HTTP ${r.status}: ${await r.text()}`);
+                return;
+            }
+
+            const reader = r.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let buffer = '';
+
+            // watchdog: если 3 минуты нет событий — сообщаем
+            let watchdog = setTimeout(() => {
+                onError('Стрим не отвечает 3 минуты — похоже, модель зависла. Нажми «Остановить» и попробуй снова.');
+            }, 180_000);
+            const resetWatchdog = () => {
+                clearTimeout(watchdog);
+                watchdog = setTimeout(() => {
+                    onError('Стрим не отвечает 3 минуты — похоже, модель зависла. Нажми «Остановить» и попробуй снова.');
+                }, 180_000);
+            };
+
+            try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+
+                    resetWatchdog();
+
+                    buffer += decoder.decode(value, { stream: true });
+
+                    let idx;
+                    while ((idx = buffer.indexOf('\n\n')) !== -1) {
+                        const block = buffer.slice(0, idx);
+                        buffer = buffer.slice(idx + 2);
+
+                        const line = block.split('\n').find(l => l.startsWith('data: '));
+                        if (!line) continue;
+
+                        let payload;
+                        try { payload = JSON.parse(line.slice(6)); } catch { continue; }
+
+                        if (payload.type === 'chunk') onChunk(payload.text || '');
+                        else if (payload.type === 'done') onDone({ parsed: payload.parsed, raw: payload.raw, kind: 'json', meta: payload.meta });
+                        else if (payload.type === 'code_result') onDone({ raw: payload.code, code: payload.code, kind: 'code', meta: payload.meta });
+                        else if (payload.type === 'error') onError(payload.message || 'неизвестная ошибка');
+                    }
+                }
+            } finally {
+                clearTimeout(watchdog);
+            }
+        }
+
+        // ---------- Rendering ----------
+        function showStopReason(meta) {
+            if (!meta) return;
+
+            const block = $('stop-reason');
+            let text = '';
+            let cls = '';
+
+            if (meta.done_reason === 'length') {
+                text = `⚠ Ответ обрезан: модель упёрлась в лимит ${meta.tokens_out} токенов. ` +
+                    `Файл слишком большой — раздели его на части и обработай отдельно.`;
+                cls = 'warn';
+            } else if (meta.done_reason === 'stop') {
+                text = `✓ Готово. Токенов: вход ${meta.tokens_in}, ответ ${meta.tokens_out}.`;
+                cls = 'ok';
+            } else if (meta.done_reason === 'error') {
+                text = `✗ Ошибка: ${meta.error || 'неизвестная'}`;
+                cls = 'err';
+            } else {
+                text = `Стоп: ${meta.done_reason}`;
+            }
+
+            block.className = 'stop-reason ' + cls;
+            block.textContent = text;
+            block.style.display = 'block';
+        }
+
+        function renderStructured(container, parsed) {
+            if (parsed.findings) { renderFindings(container, parsed.findings, 'severity'); return; }
+            if (parsed.violations) { renderFindings(container, parsed.violations, 'rule'); return; }
+            if (parsed.vectors) { container.innerHTML = highlightJson(parsed); return; }
+            container.innerHTML = highlightJson(parsed);
+        }
+
+        function renderFindings(container, items, kind) {
+            if (!items.length) {
+                container.innerHTML = `<div class="empty">Нарушений не найдено</div>`;
+                return;
+            }
+            for (const f of items) {
+                const sev = (f.severity || 'low').toLowerCase();
+                const el = document.createElement('div');
+                el.className = 'finding ' + (sev === 'high' || sev === 'mid' || sev === 'low' ? sev : 'low');
+                const badge = kind === 'rule'
+                    ? `<span class="badge rule">${escapeHtml(f.rule || '?')}</span>`
+                    : `<span class="badge ${sev}">${escapeHtml(sev)}</span>`;
+                el.innerHTML = `
             <div class="finding-body">
                 <div class="finding-meta">
                     ${badge}
@@ -954,64 +1398,119 @@ function renderFindings(container, items, kind) {
                 ${f.fix ? `<div class="finding-fix">→ ${escapeHtml(f.fix)}</div>` : ''}
             </div>
         `;
-        container.appendChild(el);
-    }
-}
-
-function highlightJson(obj) {
-    let json = typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2);
-    json = escapeHtml(json);
-    return json.replace(
-        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-        m => {
-            let cls = 'n';
-            if (/^"/.test(m)) cls = /:$/.test(m) ? 'k' : 's';
-            else if (/true|false/.test(m)) cls = 'b';
-            else if (/null/.test(m)) cls = 'null';
-            return `<span class="${cls}">${m}</span>`;
+                container.appendChild(el);
+            }
         }
-    );
-}
 
-function escapeHtml(s) {
-    return String(s ?? '')
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+        // ---------- Code result + diff ----------
+        function renderCodeResult() {
+            if (!CODE_RESULT) return;
 
-function renderError(msg) {
-    // Если ошибка в headers-задаче — покажем в code-result, иначе в result
-    const target = (current === 'headers') ? $('code-result') : $('out');
-    const card = (current === 'headers') ? $('code-result-card') : $('result-card');
-    card.style.display = 'block';
-    target.innerHTML = `<div class="error-box">${escapeHtml(msg)}</div>`;
-}
+            const onlyChanges = $('only-changes').checked;
+            const container = $('code-result');
 
-async function copyResult() {
-    const text = $('out').dataset.copy || $('out').textContent || '';
-    try {
-        await navigator.clipboard.writeText(text);
-        toast('Скопировано в буфер');
-    } catch { toast('Не удалось скопировать'); }
-}
+            const originalSet = new Set(
+                ORIGINAL_SENT.split('\n').map(l => l.trim()).filter(l => l.length)
+            );
 
-function toggleRaw(btn) {
-    const el = $('raw');
-    const hidden = el.style.display === 'none';
-    el.style.display = hidden ? '' : 'none';
-    btn.textContent = hidden ? 'Свернуть' : 'Развернуть';
-}
+            const lines = CODE_RESULT.split('\n');
+            const html = lines.map(line => {
+                const trimmed = line.trim();
+                const isAdded = trimmed.length > 0 && !originalSet.has(trimmed);
+                const cls = isAdded ? 'ln add' : 'ln' + (onlyChanges ? ' dim' : '');
+                return `<span class="${cls}">${escapeHtml(line) || ' '}</span>`;
+            }).join('');
 
-function toast(msg) {
-    const t = $('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._t);
-    t._t = setTimeout(() => t.classList.remove('show'), 1800);
-}
+            container.innerHTML = `<div class="code-view" style="padding:12px 8px">${html}</div>`;
+        }
 
-init();
-</script>
+        // ---------- Helpers ----------
+        function resultFileName() {
+            const first = ATTACHMENTS.find(f => !f.error && !f.loading);
+            if (!first) return 'result_documented.c';
+
+            const name = first.name;
+            const dot = name.lastIndexOf('.');
+            if (dot === -1) return name + '_documented.c';
+            return name.slice(0, dot) + '_documented' + name.slice(dot);
+        }
+
+        function downloadResult() {
+            if (!CODE_RESULT) return;
+            const name = CODE_RESULT_NAME || 'result_documented.c';
+            const blob = new Blob([CODE_RESULT], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            toast(`Скачано как ${name}`);
+        }
+
+        async function copyCodeResult() {
+            if (!CODE_RESULT) return;
+            try {
+                await navigator.clipboard.writeText(CODE_RESULT);
+                toast('Скопировано в буфер');
+            } catch { toast('Не удалось скопировать'); }
+        }
+
+        function highlightJson(obj) {
+            let json = typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2);
+            json = escapeHtml(json);
+            return json.replace(
+                /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                m => {
+                    let cls = 'n';
+                    if (/^"/.test(m)) cls = /:$/.test(m) ? 'k' : 's';
+                    else if (/true|false/.test(m)) cls = 'b';
+                    else if (/null/.test(m)) cls = 'null';
+                    return `<span class="${cls}">${m}</span>`;
+                }
+            );
+        }
+
+        function escapeHtml(s) {
+            return String(s ?? '')
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function renderError(msg) {
+            const target = (current === 'headers') ? $('code-result') : $('out');
+            const card = (current === 'headers') ? $('code-result-card') : $('result-card');
+            card.style.display = 'block';
+            target.innerHTML = `<div style="padding:16px"><div class="error-box">${escapeHtml(msg)}</div></div>`;
+        }
+
+        async function copyResult() {
+            const text = $('out').dataset.copy || $('out').textContent || '';
+            try {
+                await navigator.clipboard.writeText(text);
+                toast('Скопировано в буфер');
+            } catch { toast('Не удалось скопировать'); }
+        }
+
+        function toggleRaw(btn) {
+            const el = $('raw');
+            const hidden = el.style.display === 'none';
+            el.style.display = hidden ? '' : 'none';
+            btn.textContent = hidden ? 'Свернуть' : 'Развернуть';
+        }
+
+        function toast(msg) {
+            const t = $('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._t);
+            t._t = setTimeout(() => t.classList.remove('show'), 1800);
+        }
+
+        init();
+    </script>
 </body>
 
 </html>
