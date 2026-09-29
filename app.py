@@ -23,7 +23,7 @@ TASK_META = {
     "headers": {
         "name": "Заголовки функций",
         "icon": "doc",
-        "desc": "Генерация Doxygen-комментариев для функций: @brief, @param, @return.",
+        "desc": "Генерация Doxygen-комментариев. На выходе — тот же файл, но с добавленными заголовками функций.",
     },
     "misra": {
         "name": "MISRA C:2012",
@@ -37,9 +37,12 @@ TASK_META = {
     },
 }
 
+# Задачи, которые возвращают код, а не JSON
+CODE_TASKS = {"headers"}
+
 MAX_FILES = 20
-MAX_FILE_BYTES = 256 * 1024       # 256 КБ на файл
-MAX_TOTAL_BYTES = 1024 * 1024     # 1 МБ суммарно
+MAX_FILE_BYTES = 256 * 1024
+MAX_TOTAL_BYTES = 1024 * 1024
 
 
 class FileItem(BaseModel):
@@ -59,10 +62,6 @@ def _sse(obj: dict) -> str:
 
 
 def _assemble_code(files: list[FileItem], extra: str) -> str:
-    """
-    Склеивает файлы в один блок, добавляя заголовки-комментарии.
-    В конец добавляет 'extra' (свободный текст из textarea), если он есть.
-    """
     parts = []
     for f in files:
         parts.append(f"// ===== {f.name} =====\n{f.content}")
@@ -82,6 +81,18 @@ def _validate_files(files: list[FileItem]) -> None:
         total += size
     if total > MAX_TOTAL_BYTES:
         raise HTTPException(400, f"Суммарный размер файлов больше {MAX_TOTAL_BYTES // 1024} КБ")
+
+
+def _strip_code_fences(text: str) -> str:
+    """Убирает markdown-обёртки ```...```, если модель их всё-таки добавила."""
+    t = text.strip()
+    if t.startswith("```"):
+        first_nl = t.find("\n")
+        if first_nl != -1:
+            t = t[first_nl + 1:]
+    if t.endswith("```"):
+        t = t[:-3]
+    return t.strip("\n") + "\n"
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -124,7 +135,6 @@ def limits():
 
 @app.post("/api/run")
 def run(req: Request):
-    """Не-стриминговая версия. Для отладки через curl."""
     if req.task not in PROMPTS:
         raise HTTPException(404, "unknown task")
 
@@ -138,25 +148,23 @@ def run(req: Request):
     )
 
     raw = run_qwen(prompt)
-    parsed = normalize(req.task, extract_json(raw))
 
-    return {
-        "task": req.task,
-        "raw": raw,
-        "parsed": parsed,
-    }
+    if req.task in CODE_TASKS:
+        return {"task": req.task, "kind": "code", "code": _strip_code_fences(raw)}
+
+    parsed = normalize(req.task, extract_json(raw))
+    return {"task": req.task, "kind": "json", "raw": raw, "parsed": parsed}
 
 
 @app.post("/api/run_stream")
 def run_stream(req: Request):
-    """SSE-поток: текст идёт по мере генерации, в конце — распарсенный JSON."""
     if req.task not in PROMPTS:
         raise HTTPException(404, "unknown task")
 
     _validate_files(req.files)
     code = _assemble_code(req.files, req.code or "")
 
-    template = Template(PROMPTS[req.task])
+    template = Template(req.task and PROMPTS[req.task])
     prompt = template.safe_substitute(
         code=code,
         context=req.context or "",
@@ -170,8 +178,13 @@ def run_stream(req: Request):
                 yield _sse({"type": "chunk", "text": chunk})
 
             raw = "".join(buf)
-            parsed = normalize(req.task, extract_json(raw))
-            yield _sse({"type": "done", "raw": raw, "parsed": parsed})
+
+            if req.task in CODE_TASKS:
+                cleaned = _strip_code_fences(raw)
+                yield _sse({"type": "code_result", "code": cleaned})
+            else:
+                parsed = normalize(req.task, extract_json(raw))
+                yield _sse({"type": "done", "raw": raw, "parsed": parsed})
         except Exception as e:
             yield _sse({"type": "error", "message": str(e)})
 
